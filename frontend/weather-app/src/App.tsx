@@ -32,58 +32,63 @@ function App() {
 
   return (
     <div className="app">
-      <h1>Weather App</h1>
-
-      <div className="search-container">
-        <input
-          type="text"
-          placeholder="Enter city name"
-          value={city}
-          onChange={(event) => setCity(event.target.value)}
-        />
-
-        <button onClick={handleSearch} disabled={loading}>
-          {loading ? 'Searching...' : 'Search'}
-        </button>
-      </div>
-
-      {error && <p className="error">{error}</p>}
-
-      {weather && (
-        <div className="weather-card">
-          <div className="weather-header">
-            <div>
-              <h2>{weather.city}</h2>
-              <p>{weather.description}</p>
-            </div>
-
-            <img
-              src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`}
-              alt={weather.description}
-            />
-          </div>
-
-          <div className="temperature">
-            {Math.round(weather.temperature)}°C
-          </div>
-
-          <p className="feels-like">
-            Feels like {Math.round(weather.feelsLike)}°C
-          </p>
-
-          <div className="weather-details">
-            <div>
-              <span>Humidity</span>
-              <strong>{weather.humidity}%</strong>
-            </div>
-
-            <div>
-              <span>Wind</span>
-              <strong>{weather.windSpeed} m/s</strong>
-            </div>
-          </div>
+      <div className="container">
+        <div className="title">
+          <h1>Weather App</h1>
+          <p>Check the current weather for any city.</p>
         </div>
-      )}
+
+        <div className="search-container">
+          <input
+            type="text"
+            placeholder="Enter city name"
+            value={city}
+            onChange={(event) => setCity(event.target.value)}
+          />
+
+          <button onClick={handleSearch} disabled={loading}>
+            {loading ? 'Searching...' : 'Search'}
+          </button>
+        </div>
+
+        {error && <p className="error">{error}</p>}
+
+        {weather && (
+          <div className="weather-card">
+            <div className="weather-header">
+              <div>
+                <h2>{weather.city}</h2>
+                <p>{weather.description}</p>
+              </div>
+
+              <img
+                src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`}
+                alt={weather.description}
+              />
+            </div>
+
+            <div className="temperature">
+              {Math.round(weather.temperature)}°C
+            </div>
+
+            <p className="feels-like">
+              Feels like {Math.round(weather.feelsLike)}°C
+            </p>
+
+            <div className="weather-details">
+              <div>
+                <span>Humidity</span>
+                <strong>{weather.humidity}%</strong>
+              </div>
+
+              <div>
+                <span>Wind</span>
+                <strong>{weather.windSpeed} m/s</strong>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   )
 }
