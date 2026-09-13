@@ -6,21 +6,27 @@ function App() {
   const [city, setCity] = useState('')
   const [weather, setWeather] = useState<WeatherResponse | null>(null)
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const handleSearch = async () => {
     if (!city.trim()) {
+      setError('Please enter a city name.')
       return
     }
 
     try {
+      setLoading(true)
       setError('')
+      setWeather(null)
 
-      const data = await getWeather(city)
+      const data = await getWeather(city.trim())
 
       setWeather(data)
     } catch {
       setWeather(null)
       setError('Unable to fetch weather data.')
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -36,21 +42,46 @@ function App() {
           onChange={(event) => setCity(event.target.value)}
         />
 
-        <button onClick={handleSearch}>
-          Search
+        <button onClick={handleSearch} disabled={loading}>
+          {loading ? 'Searching...' : 'Search'}
         </button>
       </div>
 
-      {error && <p>{error}</p>}
+      {error && <p className="error">{error}</p>}
 
       {weather && (
-        <div>
-          <h2>{weather.city}</h2>
-          <p>Temperature: {weather.temperature}°C</p>
-          <p>Feels like: {weather.feelsLike}°C</p>
-          <p>Humidity: {weather.humidity}%</p>
-          <p>Conditions: {weather.description}</p>
-          <p>Wind speed: {weather.windSpeed} m/s</p>
+        <div className="weather-card">
+          <div className="weather-header">
+            <div>
+              <h2>{weather.city}</h2>
+              <p>{weather.description}</p>
+            </div>
+
+            <img
+              src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`}
+              alt={weather.description}
+            />
+          </div>
+
+          <div className="temperature">
+            {Math.round(weather.temperature)}°C
+          </div>
+
+          <p className="feels-like">
+            Feels like {Math.round(weather.feelsLike)}°C
+          </p>
+
+          <div className="weather-details">
+            <div>
+              <span>Humidity</span>
+              <strong>{weather.humidity}%</strong>
+            </div>
+
+            <div>
+              <span>Wind</span>
+              <strong>{weather.windSpeed} m/s</strong>
+            </div>
+          </div>
         </div>
       )}
     </div>
