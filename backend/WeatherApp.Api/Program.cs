@@ -1,7 +1,12 @@
+using WeatherApp.Api.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddOpenApi();
+builder.Services.AddControllers();
+
+builder.Services.AddHttpClient<WeatherService>();
 
 var app = builder.Build();
 
@@ -12,5 +17,6 @@ if (app.Environment.IsDevelopment())
 }
 
 // app.UseHttpsRedirection();
+app.MapControllers();
 
 app.Run();
