@@ -35,6 +35,11 @@ public class WeatherService
 
         var responseBody = await response.Content.ReadAsStringAsync();
 
+        if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+        {
+            return null;
+        }
+
         if (!response.IsSuccessStatusCode)
         {
             throw new HttpRequestException(

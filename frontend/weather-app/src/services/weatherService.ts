@@ -11,11 +11,17 @@ export interface WeatherResponse {
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 
 export async function getWeather(city: string): Promise<WeatherResponse> {
-    const response = await fetch(`${API_BASE_URL}/weather/${encodeURIComponent(city)}`)
+    const response = await fetch(
+        `${API_BASE_URL}/weather/${encodeURIComponent(city)}`
+    )
 
     if (!response.ok) {
-        throw new Error('Unable to fetch weather data')
+        const errorData = await response.json().catch(() => null)
+
+        throw new Error(
+            errorData?.message ?? 'Unable to fetch weather data'
+        )
     }
 
-    return response.json();
+    return response.json()
 }

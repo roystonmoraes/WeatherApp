@@ -22,9 +22,14 @@ function App() {
       const data = await getWeather(city.trim())
 
       setWeather(data)
-    } catch {
+    } catch (error) {
       setWeather(null)
-      setError('Unable to fetch weather data.')
+
+      if (error instanceof Error) {
+        setError(error.message)
+      } else {
+        setError('Unable to fetch weather data.')
+      }
     } finally {
       setLoading(false)
     }
