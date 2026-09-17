@@ -17,7 +17,6 @@ function App() {
     try {
       setLoading(true)
       setError('')
-      setWeather(null)
 
       const data = await getWeather(city.trim())
 
