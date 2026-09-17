@@ -28,14 +28,14 @@ function WeatherCard({ weather }: WeatherCardProps) {
             </p>
 
             <div className="weather-details">
-                <div>
+                <div className="weather-detail">
                     <span>Humidity</span>
                     <strong>{weather.humidity}%</strong>
                 </div>
 
-                <div>
+                <div className="weather-detail">
                     <span>Wind</span>
-                    <strong>{weather.windSpeed} m/s</strong>
+                    <strong>{weather.windSpeed.toFixed(1)} m/s</strong>
                 </div>
             </div>
         </div>

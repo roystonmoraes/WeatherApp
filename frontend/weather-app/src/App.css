@@ -97,7 +97,7 @@
   margin-top: 25px;
 }
 
-.weather-details div {
+.weather-detail {
   display: flex;
   flex-direction: column;
   gap: 5px;
