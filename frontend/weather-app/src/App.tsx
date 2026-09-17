@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import { getWeather, type WeatherResponse } from './services/weatherService'
 
@@ -34,6 +34,30 @@ function App() {
       setLoading(false)
     }
   }
+
+  useEffect(() => {
+    const loadDefaultWeather = async () => {
+      try {
+        setLoading(true)
+        setError('')
+
+        const data = await getWeather('London')
+
+        setWeather(data)
+      } catch (error) {
+        setWeather(null)
+
+        if (error instanceof Error) {
+          setError(error.message)
+        } else {
+          setError('Unable to fetch weather data.')
+        }
+      } finally {
+        setLoading(false)
+      }
+    }
+    loadDefaultWeather()
+  }, [])
 
   return (
     <div className="app">
