@@ -36,6 +36,29 @@ function App() {
     }
   }
 
+  const handleRefresh = async () => {
+    if (!weather) {
+      return
+    }
+
+    try {
+      setLoading(true)
+      setError('')
+
+      const data = await getWeather(weather.city)
+
+      setWeather(data)
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message)
+      } else {
+        setError('Unable to refresh weather data.')
+      }
+    } finally {
+      setLoading(false)
+    }
+  }
+
   useEffect(() => {
     const loadDefaultWeather = async () => {
       try {
@@ -77,7 +100,13 @@ function App() {
 
         {error && <p className="error">{error}</p>}
 
-        {weather && <WeatherCard weather={weather} />}
+        {weather && (
+          <WeatherCard
+            weather={weather}
+            loading={loading}
+            onRefresh={handleRefresh}
+          />
+        )}
 
       </div>
     </div>

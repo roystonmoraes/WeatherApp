@@ -2,9 +2,15 @@ import type { WeatherResponse } from '../services/weatherService'
 
 interface WeatherCardProps {
     weather: WeatherResponse
+    loading: boolean
+    onRefresh: () => void
 }
 
-function WeatherCard({ weather }: WeatherCardProps) {
+function WeatherCard({
+    weather,
+    loading,
+    onRefresh,
+}: WeatherCardProps) {
     return (
         <div className="weather-card">
             <div className="weather-header">
@@ -38,6 +44,14 @@ function WeatherCard({ weather }: WeatherCardProps) {
                     <strong>{weather.windSpeed.toFixed(1)} m/s</strong>
                 </div>
             </div>
+
+            <button
+                className="refresh-button"
+                onClick={onRefresh}
+                disabled={loading}
+            >
+                {loading ? 'Refreshing...' : 'Refresh'}
+            </button>
         </div>
     )
 }
