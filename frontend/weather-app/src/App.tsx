@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import './App.css'
 import { getWeather, type WeatherResponse } from './services/weatherService'
 import WeatherCard from './components/WeatherCard'
+import SearchBar from './components/SearchBar'
 
 function App() {
   const [city, setCity] = useState('')
@@ -67,23 +68,12 @@ function App() {
           <p>Check the current weather for any city.</p>
         </div>
 
-        <div className="search-container">
-          <input
-            type="text"
-            placeholder="Enter city name"
-            value={city}
-            onChange={(event) => setCity(event.target.value)}
-            onKeyDown={(event) => {
-              if (event.key === 'Enter') {
-                handleSearch()
-              }
-            }}
-          />
-
-          <button onClick={handleSearch} disabled={loading}>
-            {loading ? 'Searching...' : 'Search'}
-          </button>
-        </div>
+        <SearchBar
+          city={city}
+          loading={loading}
+          onCityChange={setCity}
+          onSearch={handleSearch}
+        />
 
         {error && <p className="error">{error}</p>}
 
