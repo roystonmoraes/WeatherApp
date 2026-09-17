@@ -42,7 +42,7 @@ function App() {
         setLoading(true)
         setError('')
 
-        const data = await getWeather('London')
+        const data = await getWeather(import.meta.env.VITE_DEFAULT_CITY)
 
         setWeather(data)
       } catch (error) {
